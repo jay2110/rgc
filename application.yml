@@ -1,0 +1,5 @@
+server:
+  port: 3000
+
+apikey: 'HK3obo7cEKGO6uP-XHKChR5R3qfAmumd7js4hWUBu2o'
+url : 'https://revgeocode.search.hereapi.com/v1/revgeocode?apiKey='

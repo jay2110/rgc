@@ -32,7 +32,7 @@ func ReverseGeoCoder(w http.ResponseWriter, r *http.Request) {
 }
 
 func Connection() config.Revgeo {
-	confContent, err := ioutil.ReadFile("../../application.yaml")
+	confContent, err := ioutil.ReadFile("./application.yaml")
 	if err != nil {
 		panic(err)
 	}
