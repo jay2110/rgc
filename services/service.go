@@ -16,23 +16,33 @@ func ReverseGeoCoder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var input models.InputData
 	var data models.Output
-	conf := Connection()
 	json.NewDecoder(r.Body).Decode(&input)
+	er := input.Validate()
+	if er != nil {
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(string(er.Error()))
+	} else {
+		res, err := http.Get(BaseUrl(input))
+		if err != nil {
+			log.Fatalln(err)
+		}
+		body, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		json.Unmarshal(body, &data)
+		json.NewEncoder(w).Encode(&data)
+	}
+}
+
+func BaseUrl(input models.InputData) string {
+	conf := Connection()
 	url := conf.Url + conf.Apikey + "&at=" + fmt.Sprint(input.Latitude) + "," + fmt.Sprint(input.Longitude)
-	res, err := http.Get(url)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	json.Unmarshal(body, &data)
-	json.NewEncoder(w).Encode(&data)
+	return url
 }
 
 func Connection() config.Revgeo {
-	confContent, err := ioutil.ReadFile("./application.yaml")
+	confContent, err := ioutil.ReadFile("env/configuration.yaml")
 	if err != nil {
 		panic(err)
 	}

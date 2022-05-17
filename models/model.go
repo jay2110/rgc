@@ -1,5 +1,7 @@
 package models
 
+import "errors"
+
 type InputData struct {
 	Latitude  float64 `json:"Latitude"`
 	Longitude float64 `json:"Longitude"`
@@ -43,4 +45,11 @@ type Output struct {
 			Primary bool `json:"primary"`
 		} `json:"categories"`
 	} `json:"items"`
+}
+
+func (a *InputData) Validate() (err error) {
+	if (a.Latitude <= -90 || a.Latitude >= 90) || (a.Longitude <= -180 || a.Longitude >= 180) {
+		err = errors.New("Invalid Input!!,latitude must be in between -90 and 90 and the longitude between -180 and 180")
+	}
+	return err
 }
