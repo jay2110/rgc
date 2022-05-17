@@ -1,13 +1,14 @@
 package services
 
 import (
-	"REVGEOCOD/config"
-	"REVGEOCOD/models"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/jay2110/rgc.git/config"
+	"github.com/jay2110/rgc.git/models"
 	"gopkg.in/yaml.v2"
 )
 
@@ -31,7 +32,7 @@ func ReverseGeoCoder(w http.ResponseWriter, r *http.Request) {
 }
 
 func Connection() config.Revgeo {
-	confContent, err := ioutil.ReadFile("env/configuration.yaml")
+	confContent, err := ioutil.ReadFile("../../application.yaml")
 	if err != nil {
 		panic(err)
 	}

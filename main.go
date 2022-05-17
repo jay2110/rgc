@@ -1,8 +1,6 @@
 package main
 
-import (
-	"REVGEOCOD/handlers"
-)
+import "github.com/jay2110/rgc.git/handlers"
 
 func main() {
 

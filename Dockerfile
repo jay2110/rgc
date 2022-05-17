@@ -16,7 +16,7 @@ RUN go mod download
 
 # Copy the code into the container
 COPY . .
-ADD configuration.yaml Users/AJAPURI/go/src/REVGEOCOD/configuration.yaml
+
 # Build the application
 RUN go build -o main .
 

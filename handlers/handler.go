@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"REVGEOCOD/services"
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/jay2110/rgc.git/services"
 )
 
 func HandleRequest() {
