@@ -10,6 +10,6 @@ import (
 
 func HandleRequest() {
 	http.HandleFunc("/position", services.ReverseGeoCoder)
-	conf := services.Connection()
+	conf := services.Connection(services.FileName)
 	log.Fatal(http.ListenAndServe(":"+fmt.Sprint(conf.Server.Port), nil))
 }

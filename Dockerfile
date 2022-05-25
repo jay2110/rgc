@@ -1,8 +1,17 @@
-FROM golang:latest
+FROM golang:1.16-alpine
+
 WORKDIR /app
-COPY go.mod go.sum ./
+
+COPY go.mod ./
+COPY go.sum ./
+COPY ./env/configuration.yaml ./env
 RUN go mod download
-COPY . ./
-RUN go build -o main .
+
+COPY *.go ./
+
+RUN go build -o /main 
+
 EXPOSE 30
-ENTRYPOINT [ "./main" ]
+
+CMD [ "/main" ]
+
