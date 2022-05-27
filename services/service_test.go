@@ -28,11 +28,11 @@ var (
 )
 
 var ReverseGeoCodeImplTests = []ReverseGeoCodeImplTest{
-	ReverseGeoCodeImplTest{Input1, apiErr1},
-	ReverseGeoCodeImplTest{Input2, apiErr2},
-	ReverseGeoCodeImplTest{Input3, apiErr2},
-	ReverseGeoCodeImplTest{Input4, apiErr2},
-	ReverseGeoCodeImplTest{Input5, apiErr2},
+	{Input1, apiErr1},
+	{Input2, apiErr2},
+	{Input3, apiErr2},
+	{Input4, apiErr2},
+	{Input5, apiErr2},
 }
 
 func TestReverseGeoCodeImpl(t *testing.T) {
@@ -65,7 +65,7 @@ func TestBaseurl(t *testing.T) {
 }
 
 func TestConnection(t *testing.T) {
-	conf := Connection("../../env/configuration.yaml")
+	conf := Connection("../env/configuration.yaml")
 	if len(conf.Apikey) == 0 {
 		log.Fatal("No apikey present")
 	}

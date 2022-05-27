@@ -1,6 +1,8 @@
 package models
 
-import "errors"
+import (
+	"errors"
+)
 
 type InputData struct {
 	Latitude  float64 `json:"Latitude"`
@@ -48,8 +50,10 @@ type Output struct {
 }
 
 func (a *InputData) Validate() (err error) {
+
 	if (a.Latitude <= -90 || a.Latitude >= 90) || (a.Longitude <= -180 || a.Longitude >= 180) {
 		err = errors.New("Invalid Input!! latitude must be in between -90 and 90 and the longitude between -180 and 180")
 	}
+
 	return err
 }

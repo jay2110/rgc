@@ -23,13 +23,14 @@ func (e APIErrorStruct) APIError() (int, error) {
 var (
 	ErrAuth       = &APIErrorStruct{status: http.StatusUnauthorized, err: errors.New("Authorizatin failed")}
 	ErrServerDown = &APIErrorStruct{status: http.StatusServiceUnavailable, err: errors.New("Upstream server is temporarly unavailable")}
+	ErrValidation = APIErrorStruct{status: http.StatusBadRequest, err: errors.New("co-ordinates should be in numeric values within range Lat(-90,90), long(-180,180) ")}
 )
 
 func JSONHandleError(w http.ResponseWriter, apiErr APIErrorStruct) {
 	switch {
 	case apiErr.status == 0 && apiErr.err != nil:
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(string(apiErr.err.Error()))
+		w.WriteHeader(ErrValidation.status)
+		json.NewEncoder(w).Encode(string(ErrValidation.err.Error()))
 	case apiErr.status == 401:
 		w.WriteHeader(ErrAuth.status)
 		json.NewEncoder(w).Encode(string(ErrAuth.err.Error()))

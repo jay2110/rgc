@@ -19,13 +19,29 @@ type GeoCode interface {
 	BaseUrl(models.InputData) string
 }
 
+// ReverseGeoCoder godoc
+// @Summary requesting for address
+// @Description Create a new adress with the input paylod
+// @Tags
+// @Accept  json
+// @Produce  json
+// @Param input body Input true "Create address request"
+// @Success 200 {object} Output
+// @Router /position [post]
 func ReverseGeoCoder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	decoder := json.NewDecoder(r.Body)
 	var input models.InputData
-	json.NewDecoder(r.Body).Decode(&input)
-	data, apiErr := ReverseGeoCodeImpl(input)
-	JSONHandleError(w, apiErr)
-	json.NewEncoder(w).Encode(&data)
+	var apiErr APIErrorStruct
+	json.NewDecoder(r.Body)
+	apiErr.err = decoder.Decode(&input)
+	if apiErr.err != nil {
+		JSONHandleError(w, apiErr)
+	} else {
+		data, apiErr := ReverseGeoCodeImpl(input)
+		JSONHandleError(w, apiErr)
+		json.NewEncoder(w).Encode(&data)
+	}
 }
 
 func BaseUrl(input models.InputData) string {
